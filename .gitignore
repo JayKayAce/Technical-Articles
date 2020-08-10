@@ -1,2 +1,6 @@
-tutorials/Desktop Python Application/code/venv
+venv
 Application
+build
+dist
+*.pyc
+__pycache__
