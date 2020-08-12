@@ -41,23 +41,25 @@ We can see that the application can start up, print the welcome message and shut
 
 The reason for doing this so early in the process, where the application still really simple and easy to understand, is to eliminate the complications of building the application. This is key to building applications in general, that we take small increments and solve the problems we run into in before moving on to implement the next feature. Consider the opposite case where you write more than 1000 lines of application code before testing if the code actually works and then tests this application using the python interpreter, are you then testing on the same level as the user or could there be some errors?
 
-### Isolating our development from other projects
+### Before moving on
 
-We need to install an python package in order to compile the todo script we created into an application. To make sure we do not break any other python projects we have on our machine we will create a virtual environment. This is included in python 3 using the [venv](https://docs.python.org/3/library/venv.html) module, and to run it from the command line:
+Before we move on let's make sure that our environment is setup correctly, so we have all the tools for building the application.
+
+1. Create a [Virtual Environment](https://www.realpython.org) and activate this
+2. Install [pyinstaller](https://realpython.com/pyinstaller-python/) in the activated environment using [pip](https://realpython.com/what-is-pip/)
+3. Create a `todo.py` file in a folder next to your environment, you can use my example here.
+
+After all these steps we are ready to move on.
+
+### Building from command line
+
+When the package is installed we now have access to the pyinstaller command inside our virtual environment, so lets get specific before we start building. We would like the application be combined into a single file for easy distribution. Reading the documentation for pyinstaller this can be done with the `--onefile` flag. lets try that from the command line:
 
 ```shell
-c:\Code> python -m venv venv
-c:\Code> venv\Scripts\activate
-(venv) c:\code>
+c:\Code> pyinstaller todo.py --onefile
 ```
 
-The first line will create a virtual environment named `venv` inside out code folder and the second line will activate this. Now it is time to install the [pyinstaller](https://www.pyinstaller.org/) package in our virtual environment.
-
-```shell
-(venv) C:\Code> pip install pyinstaller
-```
-
-When the installation is complete we can convert our
+This creates 
 
 ## Interaction
 
