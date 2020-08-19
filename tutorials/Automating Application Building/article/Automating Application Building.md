@@ -107,7 +107,7 @@ build_config = [
 PyInstaller.__main__.run(build_config)
 ```
 
-First we need to import the __main__.py python file from the PyInstaller package, which contains the `run()` function we need to automate the build process. Additionally we need to import the builtin `os` module to match the [pyinstaller documentation](https://pyinstaller.readthedocs.io/en/stable/usage.html#running-pyinstaller-from-python-code) for calling Pyinstaller from python code.
+First we need to import the `__main__.py` python file from the PyInstaller package, which contains the `run()` function we need to automate the build process. Additionally we need to import the builtin `os` module to match the [pyinstaller documentation](https://pyinstaller.readthedocs.io/en/stable/usage.html#running-pyinstaller-from-python-code) for calling Pyinstaller from python code.
 
 We have chosen the following arguments to keep in our `build_config` list:
 
