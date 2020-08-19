@@ -107,7 +107,7 @@ build_config = [
 PyInstaller.__main__.run(build_config)
 ```
 
-First we need to import the python file in PyInstaller, which contains the `run()` function we need to automate the build process. Additionally we need to import the builtin `os` module for later usage.
+First we need to import the __main__.py python file from the PyInstaller package, which contains the `run()` function we need to automate the build process. Additionally we need to import the builtin `os` module to match the [pyinstaller documentation](https://pyinstaller.readthedocs.io/en/stable/usage.html#running-pyinstaller-from-python-code) for calling Pyinstaller from python code.
 
 We have chosen the following arguments to keep in our `build_config` list:
 
@@ -118,7 +118,7 @@ We have chosen the following arguments to keep in our `build_config` list:
 
 In the end of the file we call the `run()` function with the argument `build_config` to start the packaging process every time the build script is called.
 
-> **Note:** The import of the module and subsequent function call may seem a bit strange, but is just because the file that contains the run function is stored in the `__main__.py` file inside the Pyinstaller package, and has a special meaning. If you chose to run the module using `python -m pyinstaller` this would be the file that was called by the python interpreter. Try to look for other packages which have a `__main__.py` in their package folder in some of the packages you have installed.
+> **Note:** The import of the module and subsequent function call may seem a bit strange, but is just because the file that contains the run function is stored in the `__main__.py` file inside the Pyinstaller package, and has a special meaning. If you chose to run the module using `python -m pyinstaller` this would be the file that was called by the python interpreter. Try to look for other packages which have a `__main__.py` in their package folder in some of the packages you have installed. Having the `run`-function being executed like this in the script means that if you at some point import `build_automation.py` into another python script the installer will run during import. This is easily solved by wrapping the function call in a main function and calling this specifically, but has been left out intentionally for the sake of brevity.
 
 Now we can build the application as many times as we like using and make sure we test on the latest changes in the application:
 
