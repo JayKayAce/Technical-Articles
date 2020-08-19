@@ -1,16 +1,28 @@
-# Automating the process of Building Desktop Applications with Python
+# Automating the Desktop Applications Building process with Python
 
-This tutorial will go through the steps of creating an application for a Windows environment, from creating the first python script and ending up with the packaged application. The application we are creating will be an interactive command line interface application, where the user can write tasks future use. With that in mind lets get started. The focus of this tutorial is to avoid requiring the user to have python installed and make sure that the program can be used in any folder. The application will be called **Todo** and give the user the possibility to create todo files in a folder.
+This tutorial will go through the steps of creating a foundation for building applications for a Windows environment. We will start out with creating the first python script for simple application taking user input and end up with a packaged application. The application we are creating will be an interactive command line interface (CLI) application, where the user can write tasks future use. The application it self is not important, since we will be focussing on automation of the build process of the application it-self.
 
-## Requirements for the application
+I have listed some of the reasons I like packaging up applications for the end user below.
 
-TODO: add application requirements, and requirements for building the application.
+* Packaging up an application to be installed on a system solves many problems for the end user of the application.
+* There is no need to install python to use the features, because the application is packaged with all the requirements.
+* There is no need to know the python language or even know that the application is even written in python. It is just a normal application performing its features.
+
+Additionally it makes you think about testing and using your end product in the same way as the end user, instead of running a script through an interpreter. Let's get started.
+
+## Setting up the Development Environment
+
+Before we develop the application, let's make sure that our environment is setup correctly, so we have all the tools for building the application. I have provided links to the articles on the different topics, if you are unsure about how to proceed.
+
+1. Install Python 3.5 or above. I use [Python 3.8](https://www.python.org/downloads/release/python-383/) while writing the tutorial
+2. Create and activate a [Virtual Environment](https://realpython.com/python-virtual-environments-a-primer/)
+3. Install [pyinstaller](https://realpython.com/pyinstaller-python/) in the activated environment using [pip](https://realpython.com/what-is-pip/)
+
+After all these steps we are ready to build our application.
 
 ## Creating the application skeleton
 
-In this tutorial I will be using python 3.8. It is not vitally important that you have the same version but as long as you use Python 3 on windows this should be enough.
-TODO: Determine level required to build application
-Let's open a text editor and start out by creating a python file named `todo.py` for our main application functionality with the following content:
+The application will be called **Todo** and takes the user input in the form of a text command. . It is not vitally important that you have the same version but as long as you use Python 3 on windows this should be enough. Let's open a text editor and start out by creating a python file named `todo.py` for our main application functionality with the following content:
 
 ```python
 """
@@ -39,26 +51,15 @@ ToDo>Q
 Exiting ToDo
 ```
 
-We can see that the application can start up, print the welcome message and shut down then we send the `Q` command, and we are ready to make an application. This step is important because we now know that the application does not have any syntactical errors or strange behavior.
+We can see that the application can start up, print the welcome message and shut down then we send the `Q` command, and print the exit message. This is the bare bones of any application and we can test this immediately. This step is important, because we now know that the application does not have any syntactical errors or strange behavior.
 
-> **Note**: Using the `print(__doc__)` in the beginning of the code is a nifty feature that makes sure that anything we put into the documentation in the top of the todo file will be printed when the program starts. This is useful for our users to see the application documentation for now when starting the program.
+> **Tip**: Using the `print(__doc__)` in the beginning of the code is a nifty feature that makes sure that anything we put into the documentation in the top of the todo file will be printed when the program starts. This is useful for our users to see the application documentation for now when starting the program, and it is easy for us to add to this.
 
-The reason for doing this so early in the process, where the application still really simple and easy to understand, is to eliminate the complications of building the application. This is key to building applications in general, that we take small increments and solve the problems we run into in before moving on to implement the next feature. Consider the opposite case where you write more than 1000 lines of application code before testing if the code actually works and then tests this application using the python interpreter, are you then testing on the same level as the user or could there be some errors?
-
-### Before moving on
-
-Before we move on let's make sure that our environment is setup correctly, so we have all the tools for building the application.
-
-1. Create a [Virtual Environment](https://realpython.com/python-virtual-environments-a-primer/) and activate this
-2. Install [pyinstaller](https://realpython.com/pyinstaller-python/) in the activated environment using [pip](https://realpython.com/what-is-pip/)
-3. Create a `todo.py` file in a folder next to your environment, you can use my example here.
-
-After all these steps we are ready to build our application.
+The reason for doing this test so early in the process, where the application still really simple and easy to understand, is to eliminate the complications of building the application. This is key to building applications in general, that we take small increments and solve the problems we run into in before moving on to implement the next feature. Consider the opposite case where you write more than 1000 lines of application code before testing. How do you know the code actually works? Are you then testing on the same level as the user or could there be some errors that you are missing?
 
 ### Building from command line
 
-When the package is installed we now have access to the pyinstaller command inside our virtual environment, so lets get specific before we start building.
-We would like the application be combined into a single file for easy distribution. Reading the documentation for pyinstaller this can be done with the `--onefile` flag. lets try that from the command line:
+Let's get specific before we start building. We would like the application be combined into a single file for easy distribution and easy deployment for our users. Reading the documentation for pyinstaller this can be done with the `--onefile` flag. Let's try that from the command line for now:
 
 ```shell
 c:\Code> pyinstaller todo.py --onefile
@@ -126,25 +127,12 @@ c:\Code> python build_automation.py
 
 ```
 
-## Testing the application
-
-In order to perform the same test of the application we start the application from the command line by executing the following command.
-
-```shell
-
-C:\Code\>.\dist\todo.exe
-Welcome to the TODO application, Type Q to Quit
-
-ToDo>
-
-Exiting ToDo
-```
-
-Another thing we could need to look into was what if we started the application from the explorer instead of the command line? The result of this would be that the program launches its own python interpreter window and starts up the application, and is ready for input.
-
-
 ## Final notes
 
-Through this article we have automated part of a solid application foundation for packaging our desktop applications for people who do not have Python installed. From here we can start to add all the customer requirements and develop all the features that the customer needs. We no longer have to worry about forgetting to set the build parameters right and we can focus on the process of writing the code. Additionally we can easily perform our tests on the actual product and not skip any steps when performing the tests. 
+In order to perform the same test of the application we start the **todo.exe** from the **dist** folder either from the command line or from the Windows File Explorer. The application works the same way as when we tested the python script, the only difference is that we now can move it to any Windows computer, without having to install python. This reminds me of a quote from one of my favorite authors:
 
-## Additional Inspiration
+> "*Begin with the end in mind*" - Stephen Covey, author of "7 Great Habits of Highly effective People"
+
+I think there is a lot of truth about delivering and developing software in this quote because the developer has to think of the end users and how they will be using the application. When I am developing applications, I consider the consequences of handing the resulting application to my parents, who by no means are considered computer savvy. It should be easy for them to use the application and the application should behave the way they would expect. This means that I cannot rely on them to remember to type command line incantation to start or run the application. This is a bar which they are never going to reach, let alone pass. Based on this I cannot just hand them a python script and expect them to know how to run this out of the box. Python scripts are for developers and applications are for all people. Some may argue that it takes too long to get the build system setup and they would rather wait until the product is finished to package and build the application. This is a bad solution. The main reason is that if you as a developer do not introduce this as early as possible certain assumptions will be included in your code, such as user using a different decimal point, or does not have a specific folder you have on your PC, and so on. Additionally you know that your application is not going to change because the user installed a different version of a crucial dependency for your application. This is all packaged into the product application
+
+Through this article we have automated a part of a solid application foundation for packaging our desktop applications with deployment in mind. From here we can start to add all the customer requirements and develop all the features that the customer needs. We no longer have to worry about forgetting to set the build parameters right and we can focus on the process of writing the code. Additionally we can easily perform our tests on the actual product and not skip any steps when testing. I have specificly kept the process of dependencies out of this article to keep the article light and compact, but if you run into the trouble I am sure that you are capable of automating that and extend the build automation script.
