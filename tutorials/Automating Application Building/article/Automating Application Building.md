@@ -111,16 +111,17 @@ First we need to import the python file in PyInstaller, which contains the `run(
 
 We have chosen the following arguments to keep in our `build_config` list:
 
-* `--onefile` results in our package is build into a single file. 
+* `--onefile` results in our package is build into a single file
 * `-n=` renames the resulting build output, in our case to `todo`
 * `--clean` makes sure that the previous build output is deleted before building the next part.
 * `os.path.join()` is used to format the path to our `todo.py`. We could also have written `"./todo.py"` which is the outcome of the join function.
 
 In the end of the file we call the `run()` function with the argument `build_config` to start the packaging process every time the build script is called.
 
-> **Note:** The import of the module and subsequent function call may seem a bit strange, but is just because the file that contains the run function is stored in the `__main__.py` file inside the Pyinstaller package, and has a special meaning. If you chose to run the module using `python -m pyinstaller` this would be the file that was called by the python interpreter. Try to look for other packages which have a `__main__.py` in their package folder in some of the packages you have installed. 
+> **Note:** The import of the module and subsequent function call may seem a bit strange, but is just because the file that contains the run function is stored in the `__main__.py` file inside the Pyinstaller package, and has a special meaning. If you chose to run the module using `python -m pyinstaller` this would be the file that was called by the python interpreter. Try to look for other packages which have a `__main__.py` in their package folder in some of the packages you have installed.
 
 Now we can build the application as many times as we like using and make sure we test on the latest changes in the application:
+
 ```shell
 
 c:\Code> python build_automation.py
@@ -133,8 +134,8 @@ In order to perform the same test of the application we start the **todo.exe** f
 
 > "*Begin with the end in mind*" - Stephen Covey, author of "7 Great Habits of Highly effective People"
 
-I think there is a lot of truth about delivering and developing software in this quote because the developer has to think of the end users and how they will be using the application. When I am developing applications, I consider the consequences of handing the resulting application to my parents, who by no means are considered computer savvy. It should be easy for them to use the application and the application should behave the way they would expect. This means that I cannot rely on them to remember to type command line incantation to start or run the application. This is a bar which they are never going to reach, let alone pass. Based on this I cannot just hand them a python script and expect them to know how to run this out of the box. Python scripts are for developers and applications are for all people. 
+I think there is a lot of truth about delivering and developing software in this quote because the developer has to think of the end users and how they will be using the application. When I am developing applications, I consider the consequences of handing the resulting application to my parents, who by no means are considered computer savvy. It should be easy for them to use the application and the application should behave the way they would expect. This means that I cannot rely on them to remember to type command line incantation to start or run the application. This is a bar which they are never going to reach, let alone pass. Based on this I cannot just hand them a python script and expect them to know how to run this out of the box. Python scripts are for developers and applications are for all people.
 
 Some may argue that it takes too long to get the build system setup and they would rather wait until the product is finished to package and build the application. This is a bad solution. The main reason is that if you as a developer do not introduce this as early as possible certain assumptions will be included in your code, such as user using a different decimal point, or does not have a specific folder you have on your PC, and so on. Additionally you know that your application is not going to change because the user installed a different version of a crucial dependency for your application. This is all packaged into the product application
 
-Through this article we have automated a part of a solid application foundation for packaging our desktop applications with deployment in mind. From here we can start to add all the customer requirements and develop all the features that the customer needs. We no longer have to worry about forgetting to set the build parameters right and we can focus on the process of writing the code. Additionally we can easily perform our tests on the actual product and not skip any steps when testing. I have specificly kept the process of dependencies out of this article to keep the article light and compact, but if you run into the trouble I am sure that you are capable of automating that and extend the build automation script.
+Through this article we have automated a part of a solid application foundation for packaging our desktop applications with deployment in mind. From here we can start to add all the customer requirements and develop all the features that the customer needs. We no longer have to worry about forgetting to set the build parameters right and we can focus on the process of writing the code. Additionally we can easily perform our tests on the actual product and not skip any steps when testing. I have specifically kept the process of dependencies out of this article in order to keep the article light and compact, but if you run into the trouble I am sure that you are capable of automating that and extend the build automation script.
