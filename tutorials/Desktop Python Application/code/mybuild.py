@@ -1,10 +1,11 @@
 import PyInstaller.__main__
+#import os
 
 install_config = [
-    "todo.py",
-    "-n todo",
+    "-n=todo",
     "--clean",
     "--onefile",
+    "./todo.py",
 ]
 
 PyInstaller.__main__.run(install_config)
