@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['todo.py'],
-             pathex=['C:\\Code\\Projects\\Technical Articles\\tutorials\\Desktop Python Application\\code'],
+             pathex=['C:\\Code\\Projects\\Technical Articles\\tutorials\\Automating Application Building\\code'],
              binaries=[],
              datas=[],
              hiddenimports=[],
