@@ -13,44 +13,44 @@ This tutorial will focus on automating the process of packaging desktop applicat
 Here are some of the reasons why packaging up applications for the end user below is important.
 
 * Packaging up an application to be installed on a system solves many problems with regards to environments and system compatibility.
-* There is **no** need to install python to use the application features, because the application is packaged with all the requirements.
-* There is **no** need to know the python language or even know that the application is even written in python. It is just a normal application performing its features.
+* There is **no** need to install Python to use the application features, because the application is packaged with all the requirements.
+* There is **no** need to know the Python language or even know that the application is even written in python. It is just a normal application performing its features.
 
 Additionally it makes you think about testing and using your end product in the same way as the end user, instead of running a script through an interpreter. If the usage of the application end product is sub-optimal for you, it will also be sub-optimal for your users. The good solution is to catch this early in the process, so let's get started.
 
 ## Setting up the Development Environment
 
-Before we develop the application, let's make sure that our environment is setup correctly, so we have all the tools for building the application. I have provided links to the articles on the different topics, if you are unsure about how to proceed.
+Before you develop the application, let's make sure that your environment is setup correctly, so you have all the tools for building the application. If you are unsure about how to proceed, the links provide access to additional information on the specific topics to install and work with:
 
 1. Install Python 3.5 or above. I use [Python 3.8](https://www.python.org/downloads/release/python-383/) while writing the tutorial
 2. Create and activate a [Virtual Environment](https://realpython.com/python-virtual-environments-a-primer/)
 3. Install [pyinstaller](https://realpython.com/pyinstaller-python/) in the activated environment using [pip](https://realpython.com/what-is-pip/)
 
-After all these steps we are ready to build our application.
+After all these steps you're ready to build your application.
 
 ## Creating the application skeleton
 
-The application will be called **Todo** and takes the user input in the form of a text command. . It is not vitally important that you have the same version but as long as you use Python 3 on windows this should be enough. Let's open a text editor and start out by creating a python file named `todo.py` for our main application functionality with the following content:
+The application will be called **Todo** and takes the user input in the form of a text command. It is not vitally important that you have the same version but as long as you use Python 3 on Windows, this should be enough. Open a text editor and start out by creating a python file named `todo.py` for your main application functionality with the following content:
 
 ```python
 """
-"Welcome to the ToDo application, Type Q to Quit"
+Welcome to the ToDo application, Type Q to Quit
 """
 
 def main():
-  print(__doc__) # Prints the doc string from the todo.py
-  while True:
-    command = input("ToDo>")
-    if command == "Q":
-      break
-  print("Exiting ToDo")
+    print(__doc__)
+    while True:
+        command = input("ToDo>")
+        if command == "Q":
+            break
+    print("Exiting ToDo")
 
 if __name__ == "__main__":
-  main()
+    main()
 
 ```
 
-This is the skeleton we are going to use for our application, and it is ready to test from the command line out using:
+This is the skeleton you are going to use for our application, and it is ready to test from the command line out using:
 
 ```shell
 c:\Code> python todo.py
@@ -59,21 +59,32 @@ ToDo>Q
 Exiting ToDo
 ```
 
-We can see that the application can start up, print the welcome message and shut down then we send the `Q` command, and print the exit message. This is the bare bones of any application and we can test this immediately. This step is important, because we now know that the application does not have any syntactical errors or strange behavior.
+If this succeeded thus far, you can see that the application can perform the following steps:
 
-> **Tip**: Using the `print(__doc__)` in the beginning of the code is a nifty feature that makes sure that anything we put into the documentation in the top of the todo file will be printed when the program starts. This is useful for our users to see the application documentation for now when starting the program, and it is easy for us to add to this.
+* Start up without errors
+* Print the welcome message
+* Shut down when you send the `Q` command
+* Print the exit message
 
-The reason for doing this test so early in the process, where the application still really simple and easy to understand, is to eliminate the complications of building the application. This is key to building applications in general, that we take small increments and solve the problems we run into in before moving on to implement the next feature. Consider the opposite case where you write more than 1000 lines of application code before testing. How do you know the code actually works? Are you then testing on the same level as the user or could there be some errors that you are missing?
+> **Tip**: Using the `print(__doc__)` in the beginning of the code is a nifty feature that makes sure that anything you put into the todo.py documentation in the top will be printed when the program starts. There are other options, but these are outside the scope of the article. 
 
-### Building from command line
+This is the absolute bare bones of any application, which can be tested.
 
-Let's get specific before we start building. We would like the application be combined into a single file for easy distribution and easy deployment for our users. Reading the documentation for pyinstaller this can be done with the `--onefile` flag. Let's try that from the command line for now:
+## Test, Verify and Increment
+
+**Testing at this step before packaging is important**, because you now know that the application does not have any syntactical errors or strange behavior, and reacts to user inputs. The reason for doing this test so early in the process, where the application still really simple and easy to understand, is to eliminate the complications of building the application. This is key to building applications in general, that you make small increments and solve the problems you run into in before moving on to implementing the next feature.
+
+Consider the opposite case where you write more than 1000 lines of application code before testing. How do you know the code actually works and how much of it works? Another bad solution is to package the application as the last part of the delivery of the application, and then you discover a bug in the packaged application. This is not fun, and is the straight road to stress and bad solutions.
+
+## Building from command line
+
+It's time to get specific before you start building. Your end user would like the application be combined into a single file for easy distribution and easy deployment for your users. Reading the documentation for Pyinstaller this can be done with the `--onefile` flag. Let's try that from the command line for now:
 
 ```shell
 c:\Code> pyinstaller todo.py --onefile
 ```
 
-After the process of building the application has finished we can see that it adds some things to our project folder. It creates two new folders, called **build** and **dist** and it creates a todo.spec file. These are the outcomes of the build process and what we would like to end up with.
+After the process of building the application has finished you can see that it adds some things to your project folder. It creates two new folders, called **build** and **dist** and it creates a todo.spec file. These are the outcomes of the build process, and the folder structure changes can be seen below:
 
 ```shell
 Project folder
@@ -83,14 +94,23 @@ Project folder
   |-- todo.spec
 ```
 
-In the **dist** folder we find our new windows program, all ready to hand over someone, who does not have python on their system. One thing to think about when building applications is that in order to build our program again after we have changed something in the python code, we need to delete the dist folder and run the `pyinstaller` command again with the same arguments to get the application compiled. What happens if we forget to add the `--onefile` argument to the command? What happens if we forget to delete the old artifact and should we do that manually? If only there were a way to package our application from a build script, where we could define all the settings once and for all. We are in luck, because the PyInstaller is just python code, so we can make a python build script, that we can use to automate the building of our applications, with the same configurations every time the application is run. Let us get started on making our lives a bit easier.
+In the **dist** folder you find your new Windows program, all ready to hand over someone, who does not have Python on their system. 
+
+> Note: Packaged files and outcomes of a build process are often refered to as **build artifacts** or just **artifacts**.
+
+One thing to think about when building applications is that in order to build your program again after you have changed something in the python code, you need to delete the **dist** folder and run the `pyinstaller` command again with the same arguments to get the application compiled. This may bring some questions to your mind such as:
+
+* What happens if you forget to add the `--onefile` argument to the command?
+* What happens if you forget to delete the old artifact and should you do that manually?
+
+If only there were a way to package our application from a build script, where we could define all the settings once and for all. We are in luck, because the PyInstaller is just python code, so we can make a python build script, that we can use to automate the building of our applications, with the same configurations every time the application is run. Let us get started on making our lives a bit easier.
 
 > **Note:** We will disregard the **build** folder and only focus on the **dist** folder for now since the purpose of the **build** folder is documented
 in the Pyinstaller documentation and in several tutorials elsewhere, and is not essential for the solution.
 
 ## Automating the building of applications
 
-Let us start of with creating a new python file called `build_automation.py`. Here we can write our new build automation so that the configuration is set once and controlled by our version control system. This gives the benefits of keeping track of any changes in the builds and we can go back and change the solution. From the [pyinstaller documentation](https://pyinstaller.readthedocs.io/en/stable/usage.html#running-pyinstaller-from-python-code) we can find a code snippet for running the installer from a python file.
+Let us start of with creating a new python file called `build_automation.py`. Here we can write our new build automation so that the configuration is set once and controlled by our version control system. This gives the benefits of keeping track of any changes in the builds and we can go back and change the solution. From the [pyinstaller documentation](https://pyinstaller.readthedocs.io/en/stable/usage.html#running-pyinstaller-from-python-code) we can find a code snippet for running the installer from a python file:
 
 ```python
 """
