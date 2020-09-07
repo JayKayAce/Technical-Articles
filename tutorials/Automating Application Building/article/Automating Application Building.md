@@ -2,24 +2,21 @@
 
 Most python code is developed for other python users or web applications and not for desktop users who do not have Python installed. Therefore packaging your application up for delivery to non-python users is a grey area in the world of Python. This is why tools like Pyinstaller was created. It improves the packaging process for developing applications that can be distributed to non-python users. This comes with another set of challenges where getting consistent outcomes is dependent on remembering command-line arguments when invoking the packaging function.
 
-This tutorial will focus on automating the process of packaging desktop applications with Pyinstaller, so you easily can run the packaging automation as a normal python script. Additionally, your script can track the settings in version control.
+This tutorial will focus on automating the process of packaging desktop applications with Pyinstaller, so you easily can run the **packaging** automation as a normal python script. Additionally, your script can track the settings in your version control system, such as Git.
 
-In this tutorial, you will learn:
+**In this tutorial, you will learn**:
 
-* When is it the best time to implement the packaging process.
-* How to implement the basics of packaging early in the process.
-* How to call PyInstaller with arguments from a simple Python script
+* When is it the best time to implement the **packaging** process.
+* How to implement the basics of **packaging** for delivering to non-python users.
+* How to call PyInstaller with consistent arguments from a simple Python script
 
-TODO: Improve remainder of introduction.
-This tutorial will go through the steps of creating a foundation for building applications for a Windows environment. We will start out with creating the first python script for simple application taking user input and end up with a packaged application. The application we are creating will be an interactive command line interface (CLI) application, where the user can write tasks future use. The application it self is not important, since we will be focussing on automation of the build process of the application it-self.
+Here are some of the reasons why packaging up applications for the end user below is important.
 
-I have listed some of the reasons I like packaging up applications for the end user below.
+* Packaging up an application to be installed on a system solves many problems with regards to environments and system compatibility.
+* There is **no** need to install python to use the application features, because the application is packaged with all the requirements.
+* There is **no** need to know the python language or even know that the application is even written in python. It is just a normal application performing its features.
 
-* Packaging up an application to be installed on a system solves many problems for the end user of the application.
-* There is no need to install python to use the features, because the application is packaged with all the requirements.
-* There is no need to know the python language or even know that the application is even written in python. It is just a normal application performing its features.
-
-Additionally it makes you think about testing and using your end product in the same way as the end user, instead of running a script through an interpreter. Let's get started.
+Additionally it makes you think about testing and using your end product in the same way as the end user, instead of running a script through an interpreter. If the usage of the application end product is sub-optimal for you, it will also be sub-optimal for your users. The good solution is to catch this early in the process, so let's get started.
 
 ## Setting up the Development Environment
 
