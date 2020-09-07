@@ -1,5 +1,4 @@
 import PyInstaller.__main__
-#import os
 
 install_config = [
     "-n=todo",
