@@ -1,20 +1,20 @@
 # Automating the Desktop Applications Building process with Python
 
-Most python code is developed for other python users or web applications and not for desktop users who do not have Python installed. Therefore packaging your application up for delivery to non-python users is a grey area in the world of Python. This is why tools like Pyinstaller was created. It improves the packaging process for developing applications that can be distributed to non-python users. This comes with another set of challenges where getting consistent outcomes is dependent on remembering command-line arguments when invoking the packaging function.
+Most Python code is developed for other Python users or web applications and not for desktop users who do not have Python installed. Therefore packaging your application up for delivery to non-Python users is a grey area in the world of Python. This is why tools like Pyinstaller was created. It improves the packaging process for developing applications that can be distributed to non-Python users. This comes with another set of challenges where getting consistent outcomes is dependent on remembering command-line arguments when invoking the packaging function.
 
-This tutorial will focus on automating the process of packaging desktop applications with Pyinstaller, so you easily can run the **packaging** automation as a normal python script. Additionally, your script can track the settings in your version control system, such as Git.
+This tutorial will focus on automating the process of packaging desktop applications with Pyinstaller, so you easily can run the **packaging** automation as a normal Python script. Additionally, your script can track the settings in your version control system, such as Git.
 
 **In this tutorial, you will learn**:
 
 * When is it the best time to implement the **packaging** process.
-* How to implement the basics of **packaging** for delivering to non-python users.
+* How to implement the basics of **packaging** for delivering to non-Python users.
 * How to call PyInstaller with consistent arguments from a simple Python script
 
 Here are some of the reasons why packaging up applications for the end-user below is important.
 
 * Packaging up an application to be installed on a system solves many problems with regards to environments and system compatibility.
 * There is **no** need to install Python to use the application features because the application is packaged with all the requirements.
-* There is **no** need to know the Python language or even know that the application is even written in python. It is just a normal application performing its features.
+* There is **no** need to know the Python language or even know that the application is even written in Python. It is just a normal application performing its features.
 
 Additionally, it makes you think about testing and using your end product in the same way as the end-user, instead of running a script through an interpreter. If the usage of the application end product is sub-optimal for you, it will also be sub-optimal for your users. The good solution is to catch this early in the process, so let's get started.
 
@@ -22,15 +22,15 @@ Additionally, it makes you think about testing and using your end product in the
 
 Before you develop the application, let's make sure that your environment is set up correctly, so you have all the tools for building the application. If you are unsure about how to proceed, the links provide access to additional information on the specific topics to install and work with:
 
-1. Install Python 3.5 or above. I use [Python 3.8](https://www.python.org/downloads/release/python-385/) while writing the tutorial
+1. Install Python 3.5 or above. The article uses [Python 3.8](https://www.python.org/downloads/release/python-385/)
 2. Create and activate a [Virtual Environment](https://realpython.com/python-virtual-environments-a-primer/)
-3. Install [pyinstaller](https://realpython.com/pyinstaller-python/) in the activated environment using [pip](https://realpython.com/what-is-pip/)
+3. Install [PyInstaller](https://realpython.com/pyinstaller-python/) in the activated environment using [pip](https://realpython.com/what-is-pip/)
 
 After all these steps you're ready to build your application.
 
 ## Creating the application skeleton
 
-The application will be called **Todo** and takes the user input in the form of a text command. It is not vitally important that you have the same version but as long as you use Python 3 on Windows, this should be enough. Open a text editor and start by creating a python file named `todo.py` for your main application functionality with the following content:
+The application will be called **Todo** and takes the user input in the form of a text command. It is not vitally important that you have the same version but as long as you use Python 3 on Windows, this should be enough. Open a text editor and start by creating a Python file named `todo.py` for your main application functionality with the following content:
 
 ```python
 """
@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
 ```
 
-This is the skeleton you are going to use for our application, and it is ready to test from the command line out using:
+This is the skeleton you are going to use for your application, and it is ready to test from the command line out using:
 
 ```shell
 c:\Code> python todo.py
@@ -98,18 +98,18 @@ In the **dist** folder you find your new Windows program, all ready to hand over
 
 > Note: Packaged files and outcomes of a build process are often referred to as **build artifacts** or just **artifacts**.
 
-One thing to think about when building applications is that in order to build your program again after you have changed something in the python code, you need to delete the **dist** folder and run the `pyinstaller` command again with the same arguments to get the application compiled. This may bring some questions to your mind such as:
+One thing to think about when building applications is that in order to build your program again after you have changed something in the Python code, you need to delete the **dist** folder and run the `pyinstaller` command again with the same arguments to get the application compiled. This may bring some questions to your mind such as:
 
 * What happens if you forget to add the `--onefile` argument to the command?
 * What happens if you forget to delete the old artifact and should you do that manually?
 
-If only there were a way to package our application from a build script, where we could define all the settings once and for all. We are in luck because the PyInstaller is just python code, so we can make a python build script, that we can use to automate the building of our applications, with the same configurations every time the application is run. Let us get started on making our lives a bit easier.
+If only there were a way to package your application from a build script, where you could define all the settings once and for all. You are in luck because the PyInstaller is just Python code and provides a Python API, so you can make a Python build script to automate the building of your applications, with the same configurations every time the automation is run.
 
-> **Note:** We will disregard the **build** folder and only focus on the **dist** folder for now since the purpose of the **build** folder is documented in the Pyinstaller documentation and in several tutorials elsewhere, and is not essential for the solution.
+> **Note:** For now disregard the **build** folder and only focus on the **dist** folder since it is not essential for the solution. The purpose of the **build** folder is documented in the Pyinstaller documentation and in several tutorials elsewhere.
 
 ## Automating the building of applications
 
-Let's start by creating a new python file called `build_automation.py` in the project folder next to the `todo.py`. This is your new build automation script. Here the configuration is set once and controlled by your version control system. This gives the benefits of keeping track of any changes in the builds and you can go back and change the solution. From the [pyinstaller documentation](https://pyinstaller.readthedocs.io/en/stable/usage.html#running-pyinstaller-from-python-code) you can find a code snippet for running the installer from a python file. An implementation of the build process has been implemented below:
+Let's start by creating a new python file called `build_automation.py` in the project folder next to the `todo.py`. This is your new build automation script. Here the configuration is set once and controlled by your version control system. This gives the benefits of keeping track of any changes in the builds and you can go back and change the solution. From the [PyInstaller documentation](https://pyinstaller.readthedocs.io/en/stable/usage.html#running-pyinstaller-from-python-code) you can find a code snippet for running the installer from a python file. An implementation of the build process has been implemented below:
 
 ```python
 """
@@ -122,7 +122,7 @@ This is a script that is used to automate the process of the application ToDo.
 import PyInstaller.__main__
 import os
 
-# This is our package configuration and all the arguments we would like to add to the application
+# This is your package configuration and all the arguments we would like to add to the application
 build_config = [
     "-n=todo",
     "--clean",
@@ -134,7 +134,7 @@ build_config = [
 PyInstaller.__main__.run(build_config)
 ```
 
-First, you need to import the `__main__.py` python file from the PyInstaller package, which contains the `run()` function needed to automate the build process. Additionally you need to import the builtin `os` module to match the [pyinstaller documentation](https://pyinstaller.readthedocs.io/en/stable/usage.html#running-pyinstaller-from-python-code) for calling Pyinstaller from python code.
+First, you need to import the `__main__.py` python file from the PyInstaller package, which contains the `run()` function needed to automate the build process. Additionally you need to import the builtin `os` module to match the [PyInstaller documentation](https://pyinstaller.readthedocs.io/en/stable/usage.html#running-pyinstaller-from-python-code) for calling Pyinstaller from python code.
 
 We have chosen the following arguments to keep in your `build_config` list:
 
@@ -145,7 +145,7 @@ We have chosen the following arguments to keep in your `build_config` list:
 
 At the end of the file, the `run()` function is called with the argument `build_config` to start the packaging process every time the build script is run.
 
-The import of the module and subsequent function call may seem a bit strange but is just because the file that contains the run function is stored in the `__main__.py` file inside the Pyinstaller package, and has a special meaning. If you chose to run the module using `python -m pyinstaller` this would be the file that was called by the python interpreter. Try to look for other packages that have a `__main__.py` in their package folder in some of the packages you have installed. Having the `run`-function being executed like this in the script means that if you at some point import `build_automation.py` into another python script the installer will run during import. This is easily solved by wrapping the function call in a main function and calling this specifically but has been left out intentionally for the sake of brevity.
+The import of the module and subsequent function call may seem a bit strange but is just because the file that contains the run function is stored in the `__main__.py` file inside the Pyinstaller package, and has a special meaning. If you chose to run the module using `python -m pyinstaller` this would be the file that was called by the python interpreter. Try to look for other packages that have a `__main__.py` in their package folder in some of the packages you have installed. Having the `run`-function being executed like this in the script means that if you at some point import `build_automation.py` into another Python script the installer will run during import. This is easily solved by wrapping the function call in a main function and calling this specifically but has been left out intentionally for the sake of brevity.
 
 Now you can build the application as many times as you like using and make sure you test on the latest changes in the application:
 
@@ -155,13 +155,13 @@ c:\Code> python build_automation.py
 
 ```
 
-The packaging process begins and with the settings from the `build_config` list in the `build_automation.py`.From this point on your application will be packaged with the same settings each time you run the script. To perform the functional test of the application you launch the **todo.exe** from the **dist** folder either from the command line or from the Windows File Explorer. You test that the application works the same way as when you tested the python script. The only difference is that you now can move it to any Windows computer, without having to install python.
+The packaging process begins and with the settings from the `build_config` list in the `build_automation.py`.From this point on your application will be packaged with the same settings each time you run the script. To perform the functional test of the application you launch the **todo.exe** from the **dist** folder either from the command line or from the Windows File Explorer. You test that the application works the same way as when you tested the python module version of **Todo.py**. The only difference is that you now can move it to any Windows computer, without having to install Python.
 
 ## Start packaging
 
 > "Begin with the end in mind" - Stephen Covey, author of "7 Great Habits of Highly Effective People"
 
-Early in the development process, it is important to consider how the final delivery of the product is supposed to be. This is imperative for you as a software developer and particularly important for developing desktop applications for non-python users. Choosing the right path for the end product as early as possible reduces the development time significantly.
+Early in the development process, it is important to consider how the final delivery of the product is supposed to be. This is imperative for you as a software developer and particularly important for developing desktop applications for non-Python users. Choosing the right path for the end product as early as possible reduces the development time significantly.
 
 > In the `todo.py` example, the final product was a single executable file text-based interface with a prompt to deliver to customers on a Windows PC without the need for a Python interpreter.
 
@@ -184,7 +184,7 @@ Do you remember the trick with using the `print(__doc__)` in the application? Th
 
 Congratulations on finishing this article. You have now learned how to get started with automating the building of Python-based Windows applications, using PyInstallers Python API. The article forms a basis for easing the packaging process of Python applications, and to alleviate the stress of packaging application by automation as early in the process as possible. You have additionally learned:
 
-* How to package a python module into an executable from the command line
+* How to package a Python module into an executable from the command line
 * When to implement packaging and what to consider when building applications
 * How to setup consistent build settings and how to control the PyInstaller API with these
 
